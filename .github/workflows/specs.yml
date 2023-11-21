@@ -40,6 +40,6 @@ jobs:
       - name: Run rails master key
         shell: bash
         env:
-          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+          SUPER_SECRET: ${{ secrets.SUPER_SECRET }}
         run: |
-          example-command "$RAILS_MASTER_KEY"
+          example-command "$SUPER_SECRET"
