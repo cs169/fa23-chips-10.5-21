@@ -33,6 +33,12 @@ jobs:
       - run: yarn install
       - run: bundle exec rake db:setup
       - run: bundle exec rake db:test:prepare
-      - run: echo "$RAILS_MASTER_KEY" > config/master.key
       - run: bundle exec rspec
       - run: bundle exec cucumber
+
+      - name: Run rails master key
+          shell: bash
+          env:
+            RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+          run: |
+            example-command "$RAILS_MASTER_KEY"
