@@ -1,5 +1,4 @@
 name: All Specs
-
 on:
   - push
   - pull_request
@@ -20,7 +19,7 @@ jobs:
           path: |-
             node_modules
             vendor/bundle
-          key: '${{ runner.os }}-${{ hashFiles(''TODO'') }}'
+          key: '${{ runner.os }}-${{ secrets.RAILS_MASTER_KEY }}'
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v3
         with:
@@ -36,10 +35,3 @@ jobs:
       - run: bundle exec rake db:test:prepare
       - run: bundle exec rspec
       - run: bundle exec cucumber
-
-      - name: Run rails master key
-        shell: bash
-        env:
-          SUPER_SECRET: ${{ secrets.SUPER_SECRET }}
-        run: |
-          example-command "$SUPER_SECRET"
