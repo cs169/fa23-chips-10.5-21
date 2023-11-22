@@ -5,6 +5,6 @@ class AddAddressAndPartyAndPhotoToRepresentatives < ActiveRecord::Migration[5.2]
     add_column :representatives, :address_state, :string
     add_column :representatives, :address_zip, :string
     add_column :representatives, :party, :string
-    add_column :representatives, :photo, 
+    add_column :representatives, :photo_url, :string
   end
 end
