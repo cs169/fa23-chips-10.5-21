@@ -1,0 +1,24 @@
+project:
+  name: 'CS169-fa23-21'
+  owner: 'fa23'
+  teamId: '21'
+  identities: {}
+  notifications:
+    email: 'petuskeyd24@berekely.edu'
+  members:
+    member1:
+      name: 'Demetri'
+      surname: 'Petuskey' 
+      githubUsername: 'DPetuskey'
+    member2:
+      name: 'Santiago'
+      surname: 'Barajas' 
+      githubUsername: 'SantiB17'
+    member3:
+      name: 'Owen'
+      surname: Murphy' 
+      githubUsername: 'ohmurphy'
+    member4:
+      name: 'Brian'
+      surname: 'Hsu' 
+      githubUsername: 'kbryanhsu'
