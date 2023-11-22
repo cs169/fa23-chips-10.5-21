@@ -38,7 +38,9 @@ jobs:
       - run: bundle exec cucumber
 
       - name: Run rails master key
-      - shell: bash
-              env:
-                RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-              run: touch master.key && echo "$RAILS_MASTER_KEY" > master.key
+        shell: bash
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+        run: touch master.key && echo "$RAILS_MASTER_KEY" > master.key
+      
+      
