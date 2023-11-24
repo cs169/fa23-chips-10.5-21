@@ -19,3 +19,17 @@ $(document).ready(() => {
         stateMapUtils.setupEventHandlers(stateMap);
     });
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+  var countyLinks = document.querySelectorAll(".county-link");
+
+  countyLinks.forEach(function(link) {
+    link.addEventListener("click", function(event) {
+      event.preventDefault();
+      var stateSymbol = link.getAttribute("data-state-symbol");
+      var countyFIPSCode = link.getAttribute("data-county-fips-code");
+      var searchURL = "/search?state_symbol=" + stateSymbol + "&county_fips_code=" + countyFIPSCode;
+      window.location.href = searchURL;
+    });
+  });
+});
