@@ -583,7 +583,8 @@ module SeedData
                         description: 'Gov. Gavin Newsom said Monday that the surge in coronavirus cases hitting California was due in part to younger people who might believe “they are invincible” but nonetheless are becoming sick from COVID-19.',
                         link:        'https://www.latimes.com/california/story/2020-07-06/young-adult-who-think-they-are-invincible-hit-hard-by-coronavirus-newsom-says'
                     }
-                ]
+                ],
+                address_city: "Sacramento"
             },
             {
                 name:       'Alexander Ocasio Cortez',
@@ -603,7 +604,8 @@ module SeedData
                         description: 'New York Rep. Alexandria Ocasio-Cortez insisted Monday she’s “not skipping debates” like her predecessor, Joe Crowley, did to disastrous effect two years ago — even though she is ducking one Wednesday citing social distancing rules despite having been out at a George Floyd protest and other group events this month.',
                         link:        'https://nypost.com/2020/06/15/aoc-defends-decision-not-to-attend-wednesdays-debate-in-person/'
                     }
-                ]
+                ],
+                address_city: "New York City"
             }
         ]
     end

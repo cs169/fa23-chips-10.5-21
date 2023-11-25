@@ -34,6 +34,8 @@ SeedData.representatives.each do |rep|
             description:    news_item[:description],
             link:           news_item[:link]
         )
+    rep_model[:address_city] = rep[:address_city]
+    rep_model.save
     end
 end
 
