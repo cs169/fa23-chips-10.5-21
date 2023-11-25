@@ -23,4 +23,25 @@ describe Representative do
     expect(representatives.first.ocdid).to eq('ocd-division/country:us/state:ca/district:33')
     expect(representatives.first.title).to eq('Representative')
   end
+
+  it 'returns existing representative if already in db' do
+    rep_info = {
+      officials: [{ name: 'John Doe' }],
+      offices:   [{ name: 'Representative', division_id: 'ocd-division/country:us/state:ca/district:33',
+      official_indices: [0] }]
+    }
+
+    # Mock the Representative.find_by call to return an existing representative
+    existing_representative = Representative.new(name: 'John Doe',
+                                                  ocdid: 'ocd-division/country:us/state:ca/district:33', title: 'Representative')
+    allow(Representative).to receive(:find_by).and_return(existing_representative)
+
+    # Mock the Representative.create call
+    allow(Representative).to receive(:create!)
+
+    representatives = Representative.civic_api_to_representative_params(rep_info)
+
+    expect(representatives.count).to eq(1)
+    expect(representatives.first).to eq(existing_representative)
+  end
 end
