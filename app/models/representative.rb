@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 class Representative < ApplicationRecord
   has_many :news_items, dependent: :delete_all
@@ -15,7 +16,7 @@ class Representative < ApplicationRecord
           ocdid_temp = office[:division_id]
         end
       end
-      
+
       already_exists = Representative.find_by(name: official[:name], title: title_temp)
 
       if already_exists.nil?

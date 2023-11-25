@@ -5,7 +5,7 @@ describe Representative do
   it 'adds representative to db if not yet in db' do
     rep_info = {
       officials: [{ name: 'John Doe' }],
-      offices: [{ name: 'Representative', division_id: 'ocd-division/country:us/state:ca/district:33',
+      offices:   [{ name: 'Representative', division_id: 'ocd-division/country:us/state:ca/district:33',
       official_indices: [0] }]
     }
 
@@ -13,7 +13,8 @@ describe Representative do
     allow(Representative).to receive(:find_by).and_return(nil)
 
     # Mock the Representative.create call
-    allow(Representative).to receive(:create!).and_return(Representative.new(name: 'John Doe', ocdid: 'ocd-division/country:us/state:ca/district:33', title: 'Representative'))
+    allow(Representative).to receive(:create!).and_return(Representative.new(name: 'John Doe',
+                                                                             ocdid: 'ocd-division/country:us/state:ca/district:33', title: 'Representative'))
 
     representatives = Representative.civic_api_to_representative_params(rep_info)
 
