@@ -16,13 +16,26 @@ class Representative < ApplicationRecord
           ocdid_temp = office.division_id
         end
       end
+      # lin1, city, state, zip
+      addr_street = ''
+      addr_city = ''
+      addr_state = ''
+      addr_zip = ''
+      if not official.address.nil? 
+        addr_street = official.address.first.line1
+        addr_city = official.address.first.city
+        addr_state = official.address.first.state
+        addr_zip = official.address.first.zip
+      end
+
 
       rep = Representative.create!({ name: official.name, ocdid: ocdid_temp,
-          title: title_temp, address_street: official.address.first.line1,
-          address_city: official.address.first.city,
-          address_state: official.address.first.state,
-          address_zip: official.address.first.zip,
-          party: offical.party, photo_url: offical.photo_url })
+          title: title_temp, 
+          address_street: addr_street,#official.address[0],
+          address_city: addr_city, #official.address[1],
+          address_state: addr_state, #official.address[2],
+          address_zip: addr_zip, #official.address[3],
+          party: official.party, photo_url: official.photo_url})
       reps.push(rep)
     end
 

@@ -1,5 +1,9 @@
 <h1><%= @rep.name %></h1>
-<%= image_tag(@rep.photo_url) %>
+
+<% unless @rep.photo_url.nil? %>
+  <%= image_tag(@rep.photo_url) %>
+<% end %>
+
 <h3> Party: </h3>
 <%= @rep.party %>
 <h3> Address: </h3>
