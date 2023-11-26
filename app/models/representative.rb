@@ -21,7 +21,7 @@ class Representative < ApplicationRecord
       addr_city = ''
       addr_state = ''
       addr_zip = ''
-      if not official.address.nil? 
+      unless official.address.nil?
         addr_street = official.address.first.line1
         addr_city = official.address.first.city
         addr_state = official.address.first.state
