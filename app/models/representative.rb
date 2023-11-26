@@ -16,6 +16,18 @@ class Representative < ApplicationRecord
           ocdid_temp = office[:division_id]
         end
       end
+      # lin1, city, state, zip
+      addr_street = ''
+      addr_city = ''
+      addr_state = ''
+      addr_zip = ''
+      if not official.address.nil? 
+        addr_street = official.address.first.line1
+        addr_city = official.address.first.city
+        addr_state = official.address.first.state
+        addr_zip = official.address.first.zip
+      end
+
 
       # lin1, city, state, zip
       addr_street = ''
