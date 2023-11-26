@@ -572,6 +572,7 @@ module SeedData
         [
             {
                 name:       'Gavin Newsom',
+                party: "Democratic",
                 news_items: [
                     {
                         title:       'Newsom Orders Second Shutdown of Restaurants and Indoor Businesses amid COVID-19',
@@ -584,10 +585,15 @@ module SeedData
                         link:        'https://www.latimes.com/california/story/2020-07-06/young-adult-who-think-they-are-invincible-hit-hard-by-coronavirus-newsom-says'
                     }
                 ],
-                address_city: "Sacramento"
+                address_city: "sacramento",
+                address_state: "CA",
+                address_street: "",
+                address_zip: "",
+                photo_url: ""
             },
             {
                 name:       'Alexander Ocasio Cortez',
+                party: "Democratic",
                 news_items: [
                     {
                         title:       'What AOC and other House Dems want to do about Climate Change',
@@ -605,7 +611,26 @@ module SeedData
                         link:        'https://nypost.com/2020/06/15/aoc-defends-decision-not-to-attend-wednesdays-debate-in-person/'
                     }
                 ],
-                address_city: "New York City"
+                address_city: "new york",
+                address_state: "NY",
+                address_street: "",
+                address_zip: "",
+                photo_url: ""
+            },
+            {
+                name:       "Mike Peterson",
+                news_items: [
+                    {
+                        title:       'Wkjhkjhkjhwant to do about Climate Change',
+                        description: 'lkhljkreport is perfectly in tune with the growing climate policy alignment on the left around standards, investments, and justice.',
+                        link:        'lkjljkom/energy-and-environment/2020/6/30/21305891/aoc-climate-change-house-democrats-select-committee-report'
+                    }],
+                party: "Democratic",
+                address_city: "kansas city",
+                address_state: "KS",
+                address_street: "450 North 17th",
+                address_zip: "66102",
+                photo_url: "https://www.denofgeek.com/wp-content/uploads/2019/09/star-wars-feature-image.jpg?fit=1600%2C1086"
             }
         ]
     end

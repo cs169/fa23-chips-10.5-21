@@ -1,2 +1,10 @@
-<%= @rep.name %>
-<%= @rep.address_city %>
+<h1><%= @rep.name %></h1>
+<%= image_tag(@rep.photo_url) %>
+<h3> Party: </h3>
+<%= @rep.party %>
+<h3> Address: </h3>
+<p>
+  <%= @rep.address_street %>, 
+  <%= @rep.address_city %>, 
+  <%= @rep.address_state %>
+</p>
