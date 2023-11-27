@@ -8,8 +8,16 @@
 <%= @rep.party %>
 <h3> Address: </h3>
 <p>
-  <%= @rep.address_street %>, 
-  <%= @rep.address_city %>, 
-  <%= @rep.address_state %>
-  <%= @rep.address_zip %>
+  <% unless (@rep.address_street.nil? or @rep.address_street == '') %>
+    <div class='address-street'><%= @rep.address_street %>, </div>
+  <% end %>
+  <% unless (@rep.address_city.nil? or @rep.address_city == '') %>
+    <div class='address-city'><%= @rep.address_city%>, </div>
+  <% end %>
+  <% unless (@rep.address_state.nil? or @rep.address_city == '') %>
+    <div class='address-state'><%= @rep.address_state %>, </div>
+  <% end %>
+  <% unless (@rep.address_zip.nil? or @rep.address_city == '') %>
+    <div class='address-zip'><%= @rep.address_zip %> </div>
+  <% end %>
 </p>

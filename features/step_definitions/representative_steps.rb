@@ -65,7 +65,10 @@ Then('I should not see the representative\'s party') do
   expect(page).not_to have_content('Nonpartisan')
 end
 
-#Then('I should not see the representative\'s address') do
+Then('I should not see the representative\'s address') do
   # Assuming you have a method to check for the absence of the representative's address on the page
-#  expect(page).not_to have_content(@representative[:address_street])
-#end
+  expect(page).not_to have_css('.address_street')
+  expect(page).not_to have_css('.address_city')
+  expect(page).not_to have_css('.address_state')
+  expect(page).not_to have_css('.address_zip')
+end

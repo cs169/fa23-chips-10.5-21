@@ -24,4 +24,4 @@ Feature: Display government representative profile
     Then I should see the representative's name "Bob Johnson"
     And I should not see the representative's party
     And I should not see the representative's address
-    And I should not see an image of the representative
+    And I should see the representative's image
