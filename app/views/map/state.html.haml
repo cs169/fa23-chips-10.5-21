@@ -41,3 +41,4 @@
 #actionmap-info-container{ 'data-counties': @county_details.to_json, 'data-state': @state.to_json,
 'data-state-topojson-file': asset_path("states/#{@state[:symbol].downcase}.topo.json") }
 = javascript_pack_tag 'state_map', 'data-turbolinks-track': 'reload'
+

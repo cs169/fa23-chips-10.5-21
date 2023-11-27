@@ -39,4 +39,11 @@ jobs:
       - run: bundle exec rake db:setup
       - run: bundle exec rake db:test:prepare
       - run: bundle exec rspec
-      - run: bundle exec cucumber    
+      - run: bundle exec cucumber
+
+      - name: Run rails master key
+        shell: bash
+        env:
+          RAILS_MASTER_SECRET: ${{ secrets.RAILS_MASTER_SECRET }}
+        run: |
+          echo $RAILS_MASTER_SECRET

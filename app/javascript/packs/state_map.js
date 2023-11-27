@@ -1,13 +1,15 @@
 const d3 = require('d3');
 const stateMapUtils = require('./state_map_utils');
-
 require('../stylesheets/map.scss');
 
-$(document).ready(() => {
+document.addEventListener('DOMContentLoaded', () => {
     const stateMap = new stateMapUtils.Map();
+
     d3.json(stateMap.topojsonUrl).then((topology) => {
         const mapAssets = stateMapUtils.parseTopojson(stateMap, topology);
-        stateMap.svgElement.selectAll('path')
+
+        stateMap.svgElement
+            .selectAll('path')
             .data(mapAssets.geojson.features)
             .enter()
             .append('path')
