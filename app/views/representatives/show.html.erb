@@ -1,22 +1,17 @@
 <h1><%= @rep.name %></h1>
 
 <% unless @rep.photo_url.nil? %>
-<<<<<<< HEAD
   <%= image_tag(@rep.photo_url) %>
-=======
   <%= image_tag @rep.photo_url, class: 'representative-image'%>
->>>>>>> 0e13da56310ca84738c55e32319ca66384546f34
 <% end %>
 
 <h3> Party: </h3>
 <%= @rep.party %>
 <h3> Address: </h3>
 <p>
-<<<<<<< HEAD
   <%= @rep.address_street %>, 
   <%= @rep.address_city %>, 
   <%= @rep.address_state %>
-=======
   <% unless (@rep.address_street.nil? or @rep.address_street == '') %>
     <div class='address-street'><%= @rep.address_street %>, </div>
   <% end %>
@@ -29,5 +24,4 @@
   <% unless (@rep.address_zip.nil? or @rep.address_city == '') %>
     <div class='address-zip'><%= @rep.address_zip %> </div>
   <% end %>
->>>>>>> 0e13da56310ca84738c55e32319ca66384546f34
 </p>
