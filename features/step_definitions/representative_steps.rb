@@ -2,20 +2,23 @@
 
 Given('there is a government representative named {string}') do |representative_name|
   # Assuming you have a way to create a representative in your system
-  @representative = Representative.create(name: representative_name, party: 'Democrat', address_street: '1231 Kingside', address_city: 'Berkeley', address_state: 'CA', address_zip: '382910', photo_url: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.ytimg.com%2Fvi%2FjcDS_EKJfsQ%2Fmaxresdefault.jpg&f=1&nofb=1&ipt=2dfff98fd915c703799242f1fff97c691dae1200f2b1a3444091381b3b2a4789&ipo=images')
+  @representative = Representative.create(name: representative_name, party: 'Democrat',
+                                          address_street: '1231 Kingside', address_city: 'Berkeley', address_state: 'CA', address_zip: '382910', photo_url: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.ytimg.com%2Fvi%2FjcDS_EKJfsQ%2Fmaxresdefault.jpg&f=1&nofb=1&ipt=2dfff98fd915c703799242f1fff97c691dae1200f2b1a3444091381b3b2a4789&ipo=images')
 end
 
 Given('there is a government representative named {string} without an image') do |representative_name|
   # Assuming you have a way to create a representative without an image in your system
-  @representative = Representative.create(name: representative_name, party: 'Democrat', address_street: '1231 Kingside', address_city: 'Berkeley', address_state: 'CA', address_zip: '382910', photo_url: nil)
+  @representative = Representative.create(name: representative_name, party: 'Democrat',
+                                          address_street: '1231 Kingside', address_city: 'Berkeley', address_state: 'CA', address_zip: '382910', photo_url: nil)
 end
 
 Given('there is a government representative named {string} with missing party and address') do |representative_name|
   # Assuming you have a way to create a representative with missing party and address in your system
-  @representative = Representative.create(name: representative_name, party: nil, address_street: '', address_city: '', address_state: '', address_zip: '',  photo_url: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.ytimg.com%2Fvi%2FjcDS_EKJfsQ%2Fmaxresdefault.jpg&f=1&nofb=1&ipt=2dfff98fd915c703799242f1fff97c691dae1200f2b1a3444091381b3b2a4789&ipo=images')
+  @representative = Representative.create(name: representative_name, party: nil, address_street: '', address_city: '',
+                                          address_state: '', address_zip: '', photo_url: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.ytimg.com%2Fvi%2FjcDS_EKJfsQ%2Fmaxresdefault.jpg&f=1&nofb=1&ipt=2dfff98fd915c703799242f1fff97c691dae1200f2b1a3444091381b3b2a4789&ipo=images')
 end
 
-When('I visit the profile page for {string}') do |representative_name|
+When('I visit the profile page for {string}') do |_representative_name|
   # Assuming you have a route and controller action that renders the representative's profile page
   visit representative_path(@representative)
 end
@@ -43,7 +46,6 @@ Then('I should see the representative\'s address') do
   unless @representative[:address_zip].nil? or @representative[:address_zip] == ''
     expect(page).to have_content(@representative[:address_zip])
   end
-  
 end
 
 Then('I should see the representative\'s image') do

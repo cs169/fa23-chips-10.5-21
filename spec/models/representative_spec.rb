@@ -3,6 +3,41 @@
 require 'rails_helper'
 require 'spec_helper'
 
+class MockedAPIResponse
+  attr_accessor :officials, :offices
+
+  def initialize(officials, offices)
+    @officials = officials
+    @offices = offices
+  end
+end
+
+class MockedOfficial
+  attr_accessor :name, :party, :address
+
+  def initialize(name, party, address)
+    
+  end
+end
+
+class MockedAddress
+  attr_accessor :name, :party, :address
+
+  def initialize(address_hash)
+    
+  end
+end
+
+class MockedOffice
+  attr_accessor :name, :party, :address
+
+  def initialize(address_hash)
+    
+  end
+end
+
+
+
 describe Representative do
   let(:john_doe_rep_info) do
     {
@@ -36,5 +71,59 @@ describe Representative do
     representatives = described_class.civic_api_to_representative_params(john_doe_rep_info)
 
     expect(representatives).to contain_exactly(existing_representative)
+  end
+
+  describe '.get_address_from_official' do
+    it 'returns a hash with address information' do
+      official = double('official',
+                        address: [double('address', line1: '123 Main St', city: 'City', state: 'CA', zip: '12345')])
+      address = Representative.get_address_from_official(official)
+      expect(address).to eq({
+                              'street' => '123 Main St',
+                              'city'   => 'City',
+                              'state'  => 'CA',
+                              'zip'    => '12345'
+                            })
+    end
+  end
+
+  describe '.get_office_info' do
+    it 'returns a hash with office information' do
+      rep_info = double('rep_info', offices: [
+                          double('office', name: 'Office 1', official_indices: [0]),
+                          double('office', name: 'Office 2', official_indices: [1])
+                        ])
+      index = 0
+      office_info = Representative.get_office_info(rep_info, index)
+      expect(office_info).to eq({
+                                  'ocdid' => 'DivisionID1',
+                                  'title' => 'Office 1'
+                                })
+    end
+  end
+
+  describe '.civic_api_to_representative_params' do
+    it 'creates representative records from Civic API data' do
+      rep_info = double('rep_info', officials: [
+                          double('official', name: 'John Doe', party: 'Independent', photo_url: 'http://example.com/photo1'),
+                          double('official', name: 'Jane Doe', party: 'Republican', photo_url: 'http://example.com/photo2')
+                        ])
+      allow(Representative).to receive(:get_office_info).and_return({ 'ocdid' => 'DivisionID1', 'title' => 'Office 1' })
+
+      representatives = Representative.civic_api_to_representative_params(rep_info)
+
+      expect(representatives.count).to eq(2)
+      expect(representatives[0]).to have_attributes(
+        name:           'John Doe',
+        ocdid:          'DivisionID1',
+        title:          'Office 1',
+        address_street: '',
+        address_city:   '',
+        address_state:  '',
+        address_zip:    '',
+        party:          'Independent',
+        photo_url:      'http://example.com/photo1'
+      )
+    end
   end
 end
