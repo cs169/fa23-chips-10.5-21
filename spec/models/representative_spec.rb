@@ -13,26 +13,32 @@ class MockedAPIResponse
 end
 
 class MockedOfficial
-  attr_accessor :name, :party, :address
+  attr_accessor :name, :party, :address, :photo_url
 
-  def initialize(name, party, address)
-    
+  def initialize(name, party, address, photo_url)
+    @name = name
+    @party = party
+    @address = address
   end
 end
 
 class MockedAddress
-  attr_accessor :name, :party, :address
+  attr_accessor :line1, :city, :state, :zip
 
-  def initialize(address_hash)
-    
+  def initialize(line1, city, state, zip)
+    @line1 = line1
+    @city = city
+    @state = state
+    @zip = zip
   end
 end
 
 class MockedOffice
-  attr_accessor :name, :party, :address
+  attr_accessor :title, :ocdid
 
-  def initialize(address_hash)
-    
+  def initialize(title, ocdid)
+    @title = title
+    @ocdid = ocdid
   end
 end
 
@@ -104,10 +110,13 @@ describe Representative do
 
   describe '.civic_api_to_representative_params' do
     it 'creates representative records from Civic API data' do
-      rep_info = double('rep_info', officials: [
-                          double('official', name: 'John Doe', party: 'Independent', photo_url: 'http://example.com/photo1'),
-                          double('official', name: 'Jane Doe', party: 'Republican', photo_url: 'http://example.com/photo2')
-                        ])
+      mock_address = 
+      mock_officials = [MockedOfficial.new('John Doe', 'Independent', mock_address, 'http://example.com/photo1'), MockedOfficial.new('John Doe', 'Independent', mock_address, 'http://example.com/photo1'),]
+      rep_info = MockedAPIResponse()
+      #rep_info = double('rep_info', officials: [
+      #                    double('official', name: 'John Doe', party: 'Independent', photo_url: 'http://example.com/photo1'),
+      #                    double('official', name: 'Jane Doe', party: 'Republican', photo_url: 'http://example.com/photo2')
+      #                  ])
       allow(Representative).to receive(:get_office_info).and_return({ 'ocdid' => 'DivisionID1', 'title' => 'Office 1' })
 
       representatives = Representative.civic_api_to_representative_params(rep_info)
