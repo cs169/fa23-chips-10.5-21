@@ -19,7 +19,7 @@ class Representative < ApplicationRecord
   end
 
   def self.get_office_info(rep_info, index)
-    info = Hash.new
+    info = {}
     info['ocdid'] = ''
     info['title'] = ''
 
@@ -36,7 +36,6 @@ class Representative < ApplicationRecord
     reps = []
 
     rep_info.officials.each_with_index do |official, index|
-      office_info = Hash.new
       office_info = Representative.get_office_info(rep_info, index)
       already_exists = Representative.find_by(name: official.name, title: office_info['title'])
       if already_exists.nil?
