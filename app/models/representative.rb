@@ -3,7 +3,7 @@
 class Representative < ApplicationRecord
   has_many :news_items, dependent: :delete_all
 
-  def get_address_from_official(official)
+  def self.get_address_from_official(official)
     addr = {}
     addr['street'] = ''
     addr['city'] = ''
@@ -18,7 +18,8 @@ class Representative < ApplicationRecord
     addr
   end
 
-  def get_office_info(rep_info, index)
+  def self.get_office_info(rep_info, index)
+    info = Hash.new
     info['ocdid'] = ''
     info['title'] = ''
 
@@ -35,10 +36,11 @@ class Representative < ApplicationRecord
     reps = []
 
     rep_info.officials.each_with_index do |official, index|
-      office_info = get_office_info(rep_info, index)
-      already_exists = Representative.find_by(name: official.name, title: title_temp)
+      office_info = Hash.new
+      office_info = Representative.get_office_info(rep_info, index)
+      already_exists = Representative.find_by(name: official.name, title: office_info['title'])
       if already_exists.nil?
-        addr = get_address_from_official(official)
+        addr = Representative.get_address_from_official(official)
         rep = Representative.create!({ name: official.name, ocdid: office_info['ocdid'],
           title: office_info['title'], address_street: addr['street'], address_city: addr['city'],
           address_state: addr['state'], address_zip: addr['zip'],
