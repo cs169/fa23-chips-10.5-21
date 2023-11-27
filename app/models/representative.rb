@@ -3,41 +3,45 @@
 class Representative < ApplicationRecord
   has_many :news_items, dependent: :delete_all
 
+  def get_address_from_official(official)
+    addr = {}
+    addr['street'] = ''
+    addr['city'] = ''
+    addr['state'] = ''
+    addr['zip'] = ''
+    unless official.address.nil?
+      addr['street'] = official.address.first.line1
+      addr['city'] = official.address.first.city
+      addr['state'] = official.address.first.state
+      addr['zip'] = official.address.first.zip
+    end
+    addr
+  end
+
+  def get_office_info(rep_info, index)
+    info['ocdid'] = ''
+    info['title'] = ''
+
+    rep_info.offices.each do |office|
+      if office.official_indices.include?(index)
+        info['title'] = office.name
+        info['ocdid'] = office.division_id
+      end
+    end
+    info
+  end
+
   def self.civic_api_to_representative_params(rep_info)
     reps = []
 
     rep_info.officials.each_with_index do |official, index|
-      ocdid_temp = ''
-      title_temp = ''
-
-      rep_info.offices.each do |office|
-        if office.official_indices.include?(index)
-          title_temp = office.name
-          ocdid_temp = office.division_id
-        end
-      end
-
-      # lin1, city, state, zip
-      addr_street = ''
-      addr_city = ''
-      addr_state = ''
-      addr_zip = ''
-      unless official.address.nil?
-        addr_street = official.address.first.line1
-        addr_city = official.address.first.city
-        addr_state = official.address.first.state
-        addr_zip = official.address.first.zip
-      end
-
+      office_info = get_office_info(rep_info, index)
       already_exists = Representative.find_by(name: official.name, title: title_temp)
-
       if already_exists.nil?
-        rep = Representative.create!({ name: official.name, ocdid: ocdid_temp,
-          title: title_temp,
-          address_street: addr_street, # official.address[0],
-          address_city: addr_city, # official.address[1],
-          address_state: addr_state, # official.address[2],
-          address_zip: addr_zip, # official.address[3],
+        addr = get_address_from_official(official)
+        rep = Representative.create!({ name: official.name, ocdid: office_info['ocdid'],
+          title: office_info['title'], address_street: addr['street'], address_city: addr['city'],
+          address_state: addr['state'], address_zip: addr['zip'],
           party: official.party, photo_url: official.photo_url })
         reps.push(rep)
       else
