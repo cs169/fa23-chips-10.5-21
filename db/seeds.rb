@@ -34,6 +34,11 @@ SeedData.representatives.each do |rep|
             description:    news_item[:description],
             link:           news_item[:link]
         )
+
+    [:address_city, :address_state, :address_street, :address_zip, :photo_url, :party].each { |col|
+      rep_model[col] = rep[col]
+    }
+    rep_model.save
     end
 end
 

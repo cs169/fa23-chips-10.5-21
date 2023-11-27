@@ -9,7 +9,9 @@
 # See: https://github.com/codecov/example-ruby
 
 require 'simplecov'
-SimpleCov.start 'rails'
+SimpleCov.start 'rails' do
+  add_filter 'lib'
+end
 
 if ENV['CI']
   require 'codecov'
@@ -17,6 +19,8 @@ if ENV['CI']
 end
 
 require 'cucumber/rails'
+
+require 'capybara/rails'
 
 # frozen_string_literal: true
 
