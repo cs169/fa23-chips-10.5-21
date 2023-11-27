@@ -20,6 +20,8 @@ end
 
 require 'cucumber/rails'
 
+require 'capybara/rails'
+
 # frozen_string_literal: true
 
 # Capybara defaults to CSS3 selectors rather than XPath.

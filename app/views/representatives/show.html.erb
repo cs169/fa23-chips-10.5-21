@@ -1,7 +1,7 @@
 <h1><%= @rep.name %></h1>
 
 <% unless @rep.photo_url.nil? %>
-  <%= image_tag(@rep.photo_url) %>
+  <%= image_tag @rep.photo_url, class: 'representative-image'%>
 <% end %>
 
 <h3> Party: </h3>
@@ -11,4 +11,5 @@
   <%= @rep.address_street %>, 
   <%= @rep.address_city %>, 
   <%= @rep.address_state %>
+  <%= @rep.address_zip %>
 </p>

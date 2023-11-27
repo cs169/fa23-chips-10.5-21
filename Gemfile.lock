@@ -522,6 +522,7 @@ DEPENDENCIES
   axe-core-rspec
   bootsnap (>= 1.1.0)
   byebug
+  capybara
   codecov
   cucumber-rails
   database_cleaner
