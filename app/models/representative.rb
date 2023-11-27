@@ -28,7 +28,7 @@ class Representative < ApplicationRecord
         addr_state = official.address.first.state
         addr_zip = official.address.first.zip
       end
-      
+
       already_exists = Representative.find_by(name: official.name, title: title_temp)
 
       if already_exists.nil?
