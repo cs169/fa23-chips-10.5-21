@@ -6,28 +6,16 @@ class Representative < ApplicationRecord
   def self.civic_api_to_representative_params(rep_info)
     reps = []
 
-    rep_info[:officials].each_with_index do |official, index|
+    rep_info.officials.each_with_index do |official, index|
       ocdid_temp = ''
       title_temp = ''
 
-      rep_info[:offices].each do |office|
-        if office[:official_indices].include?(index)
-          title_temp = office[:name]
-          ocdid_temp = office[:division_id]
+      rep_info.offices.each do |office|
+        if office.official_indices.include?(index)
+          title_temp = office.name
+          ocdid_temp = office.division_id
         end
       end
-      # lin1, city, state, zip
-      addr_street = ''
-      addr_city = ''
-      addr_state = ''
-      addr_zip = ''
-      unless official.address.nil?
-        addr_street = official.address.first.line1
-        addr_city = official.address.first.city
-        addr_state = official.address.first.state
-        addr_zip = official.address.first.zip
-      end
-
 
       # lin1, city, state, zip
       addr_street = ''
@@ -41,7 +29,7 @@ class Representative < ApplicationRecord
         addr_zip = official.address.first.zip
       end
       
-      already_exists = Representative.find_by(name: official[:name], title: title_temp)
+      already_exists = Representative.find_by(name: official.name, title: title_temp)
 
       if already_exists.nil?
         rep = Representative.create!({ name: official.name, ocdid: ocdid_temp,
