@@ -11,7 +11,7 @@
                             %th Links
                     %tbody
                         - @representatives.each_with_index do |rep, _index|
-                            %tr
+                            %tr.representative
                                 %td
                                     = link_to representative_path(rep.id) do
                                         = rep.name

@@ -58,8 +58,8 @@
                         %tr
                             %td= index + 1
                             %td= event.name
-                            %td= event.state.name
-                            %td= event.county.name
+                            /%td= event.state.name
+                            /%td= event.county.name
                             %td
                                 %time.timeago{ datetime: event.start_time.iso8601 }
                             %td
