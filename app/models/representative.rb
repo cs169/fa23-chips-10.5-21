@@ -47,6 +47,6 @@ class Representative < ApplicationRecord
         reps.push(already_exists)
       end
     end
-    reps
+    return reps
   end
 end
