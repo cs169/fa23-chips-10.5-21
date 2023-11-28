@@ -32,7 +32,7 @@ class Representative < ApplicationRecord
 
   def self.civic_api_to_representative_params(rep_info)
     reps = []
-
+    Rails.logger.debug("Value of some_variable: #{rep_info}")
     rep_info.officials.each_with_index do |official, index|
       office_info = Representative.get_office_info(rep_info, index)
       already_exists = Representative.find_by(name: official.name, title: office_info['title'])
