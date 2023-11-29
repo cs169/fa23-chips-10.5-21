@@ -1,0 +1,9 @@
+<%= form_tag(search_results_campaign_finances_path, method: 'post') do %>
+  <%= label_tag 'Cycle' %>
+  <%= text_field_tag 'cycle' %>
+
+  <%= label_tag 'Category' %>
+  <%= text_field_tag 'category' %>
+
+  <%= submit_tag 'Search' %>
+<% end %>

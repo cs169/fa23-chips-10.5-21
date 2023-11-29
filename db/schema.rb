@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_11_28_202716) do
+ActiveRecord::Schema.define(version: 2023_11_29_210653) do
+
+  create_table "campaign_finances", force: :cascade do |t|
+    t.json "candidates"
+    t.string "cycle"
+    t.string "category"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "counties", force: :cascade do |t|
     t.string "name", null: false

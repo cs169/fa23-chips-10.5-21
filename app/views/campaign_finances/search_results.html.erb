@@ -1,0 +1,21 @@
+<h1>Search Results</h1>
+
+<p>Cycle: <%= @cycle %></p>
+<p>Category: <%= @category %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Candidate</th>
+      <!-- Add other columns as needed -->
+    </tr>
+  </thead>
+  <tbody>
+    <% @finances.first[:candidates].each do |candidate| %>
+      <tr>
+        <td><%= candidate %></td>
+        <!-- Add other columns as needed -->
+      </tr>
+    <% end %>
+  </tbody>
+</table>
