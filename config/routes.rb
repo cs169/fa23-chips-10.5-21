@@ -45,8 +45,8 @@ Rails.application.routes.draw do
     # Routes for Campaign Finances
     resources :campaign_finances do
       collection do
-        get 'search', to: 'campaign_finances#search_form', as: 'search_form'
-        post 'search', to: 'campaign_finances#search_results', as: 'search_results'
+        get '', to: 'campaign_finances#search_form', as: 'search_form'
+        post '', to: 'campaign_finances#search_results', as: 'search_results'
       end
     end
 
