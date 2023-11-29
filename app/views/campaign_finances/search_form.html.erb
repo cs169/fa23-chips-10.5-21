@@ -1,12 +1,24 @@
 <!-- app/views/campaign_finances/search_form.html.erb -->
 
+<% cycle_options = (2010..2020).to_a.reverse.map { |year| [year.to_s, year.to_s] } %><% category_options = [
+  ['Candidate Loan', 'candidate-loan'],
+  ['Contribution Total', 'contribution-total'],
+  ['Debts Owed', 'debts-owed'],
+  ['Disbursements Total', 'disbursements-total'],
+  ['End Cash', 'end-cash'],
+  ['Individual Total', 'individual-total'],
+  ['PAC Total', 'pac-total'],
+  ['Receipts Total', 'receipts-total'],
+  ['Refund Total', 'refund-total']
+] %>
+
 <%= form_tag(search_results_campaign_finances_path, method: 'post', class: 'form-inline mt-3') do %>
   <div class="form-group mb-2">
-    <%= text_field_tag 'cycle', nil, class: 'form-control', placeholder: 'Cycle' %>
+    <%= select_tag 'cycle', options_for_select(cycle_options), class: 'form-control' %>
   </div>
 
   <div class="form-group mx-sm-3 mb-2">
-    <%= text_field_tag 'category', nil, class: 'form-control', placeholder: 'Category' %>
+    <%= select_tag 'category', options_for_select(category_options), class: 'form-control' %>
   </div>
 
   <%= submit_tag 'Search', class: 'btn btn-primary mb-2' %>
