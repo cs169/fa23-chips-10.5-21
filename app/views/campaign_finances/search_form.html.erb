@@ -1,6 +1,6 @@
 <!-- app/views/campaign_finances/search_form.html.erb -->
 
-<% cycle_options = (2010..2020).to_a.reverse.map { |year| [year.to_s, year.to_s] } %><% category_options = [
+<% cycle_options = (2010..2020).select(&:even?).to_a.reverse.map { |year| [year.to_s, year.to_s] } %><% category_options = [
   ['Candidate Loan', 'candidate-loan'],
   ['Contribution Total', 'contribution-total'],
   ['Debts Owed', 'debts-owed'],
