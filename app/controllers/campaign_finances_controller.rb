@@ -9,7 +9,7 @@ class CampaignFinancesController < ApplicationController
     @category = params[:category]
     
     # Perform a search query based on the cycle and category
-    #@finances = CampaignFinance.get_cycle_and_category(@cycle, @category)
-    @finances = CampaignFinance.where(cycle: @cycle, category: @category)
+    @finances = CampaignFinance.get_cycle_and_category(@cycle, @category)
+    #@finances = CampaignFinance.where(cycle: @cycle, category: @category)
   end
 end

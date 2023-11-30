@@ -109,3 +109,6 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 group :test do
   gem 'capybara'
 end
+
+# Used for ProPublica API request
+gem 'httparty'
