@@ -7,7 +7,7 @@ Feature: User login and logout
   Scenario: Log in with Google OAuth2
     Given I am on the login page
     When I click the "Login with Google" button
-    Then I should be redirected to the Google login page
+    Then I should be redirected to the map
 
   Scenario: Log out
     Given I am logged in

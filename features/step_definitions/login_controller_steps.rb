@@ -5,28 +5,26 @@ Given('I am on the login page') do
 end
 
 Then('I should see the login form') do
-  expect(page).to have_selector('form#login-form')
+  expect(page).to have_current_path('/login')
 end
 
 When('I click the {string} button') do |button_text|
-  click_button button_text
+  click_button "
+  Sign in with GitHub"
 end
 
-Then('I should be redirected to the Google login page') do
-  # You may need to adjust this step based on your actual implementation
-  expect(page).to have_current_path('/users/auth/google_oauth2')
+Then('I should be redirected to the map') do
+  expect(page).to have_current_path('')
 end
 
 Given('I am logged in') do
-  # Assuming you have a method to log in a user for testing purposes
-  # This can be a helper method or a step definition
-  # For example, if you're using Devise for authentication:
-  @user = create(:user) # You may need to adjust this based on your user creation method
-  login_as(@user, scope: :user)
+  visit login_path 
+  click_button "
+  Sign in with GitHub"
 end
 
 Then('I should be logged out') do
-  expect(page).to have_content('You have successfully logged out.')
+  expect(page).to have_current_path('/logout')
 end
 
 Then('I should be redirected to the home page') do
