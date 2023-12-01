@@ -49,7 +49,7 @@ class PropublicaService
     request['X-API-Key'] = "#{@api_key}"
     response = http.request(request)
     Rails.logger.info("API Key: #{@api_key}")
-    Rails.logger.info(url)
+    Rails.logger.info("#{url}")
     #response = self.class.get("2015/candidates/leaders/pac-total.json", headers: {'X-API-Key' => "#{@api_key}"})
     handle_response(response)
   end
