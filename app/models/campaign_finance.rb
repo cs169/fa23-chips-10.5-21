@@ -22,9 +22,9 @@ class CampaignFinance < ApplicationRecord
   def self.add_candidates_to_db(api_reponse, cycle, category)
     candidates_list = []
     json_info = JSON.parse(api_reponse)
-    Rails.logger.debug(api_reponse.methods)
-    Rails.logger.debug(json_info.to_s)
-    Rails.logger.debug(json_info.methods)
+    # Rails.logger.debug(api_reponse.methods)
+    # Rails.logger.debug(json_info.to_s)
+    # Rails.logger.debug(json_info.methods)
     json_info['results'].each do |candidate|
       candidates_list.push(candidate['name'])
     end
