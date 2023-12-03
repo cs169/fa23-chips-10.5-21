@@ -40,6 +40,8 @@ class PropublicaService
     
     response = connection.get(url) do |req|
       req.headers['X-API-Key'] = @api_key
+      Rails.logger.info("API Request URL: #{req}")
+      Rails.logger.info("API Request Headers: #{req.headers}")
     end
 
     handle_response(response)
@@ -50,7 +52,7 @@ class PropublicaService
   def connection
     @connection ||= Faraday.new do |conn|
       conn.use Faraday::Request::UrlEncoded
-      conn.use Faraday::Response::Logger if Rails.env.development?
+      conn.use Faraday::Response::Logger 
       conn.adapter Faraday.default_adapter
     end
   end
