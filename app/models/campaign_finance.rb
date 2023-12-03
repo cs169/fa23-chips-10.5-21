@@ -52,13 +52,16 @@ class PropublicaService
 
   def get_candidate_info(cycle, category)
     Rails.logger.info("get_candidate_info method called") 
+    puts "get_candidate_info method called"
     url = "https://api.propublica.org/campaign-finance/v1/#{cycle}/candidates/leaders/#{category}.json"
     
     Rails.logger.info("API Request URL: #{url}")
+    puts "API Request URL: #{url}"
     headers = { 'X-API-Key' => @api_key }
   
     #response = connection.get(url, nil, headers)
     Rails.logger.info("API Request Headers: #{headers}")
+    puts "API Request Headers: #{headers}"
     response = FakeResponse.new(600, "nothing")
 
     handle_response(response)
@@ -67,7 +70,8 @@ class PropublicaService
   private
 
   def connection
-    Rails.logger.info("connection method called") 
+    Rails.logger.info("connection method called")
+    puts "connection method called"
     @connection ||= Faraday.new do |conn|
       conn.use Faraday::Request::UrlEncoded
       conn.use Faraday::Response::Logger 
@@ -77,6 +81,7 @@ class PropublicaService
 
   def handle_response(response)
     Rails.logger.info("handle_response method called") 
+    puts "handle_response method called"
     if response.status == 200
       Rails.logger.debug("#{response.body}")
       return response.body
