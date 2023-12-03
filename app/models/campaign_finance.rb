@@ -12,7 +12,11 @@ class CampaignFinance < ApplicationRecord
       propublica_service = PropublicaService.new(api_key)
       Rails.logger.info("API Key: #{api_key}")
       Rails.logger.info("cycle: #{cycle}, category: #{category}}")  # Log URL before making the request
+
       api_response = propublica_service.get_candidate_info(cycle, category)
+      if api_response.nil?
+        return nil
+      end
       Rails.logger.info("api_response: #{api_response}")  # Log URL before making the request
       processed_candidates = CampaignFinance.add_candidates_to_db(api_response, cycle, category)
     end
@@ -32,6 +36,15 @@ class CampaignFinance < ApplicationRecord
   end
 end
 
+class FakeResponse
+  attr_accessor :status, :body
+
+  def initialize(status, body)
+    @status = status
+    @body = body
+  end
+end
+
 class PropublicaService
   def initialize(api_key)
     @api_key = api_key
@@ -44,8 +57,9 @@ class PropublicaService
     Rails.logger.info("API Request URL: #{url}")
     headers = { 'X-API-Key' => @api_key }
   
-    response = connection.get(url, nil, headers)
+    #response = connection.get(url, nil, headers)
     Rails.logger.info("API Request Headers: #{headers}")
+    response = FakeResponse.new(600, "nothing")
 
     handle_response(response)
   end
@@ -65,9 +79,10 @@ class PropublicaService
     Rails.logger.info("handle_response method called") 
     if response.status == 200
       Rails.logger.debug("#{response.body}")
-      response.body
+      return response.body
     else
-      raise "API request failed with status code #{response.status}: #{response.body}"
+      #raise "API request failed with status code #{response.status}: #{response.body}"
+      return nil
     end
   end
 end
