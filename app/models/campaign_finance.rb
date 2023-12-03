@@ -11,7 +11,9 @@ class CampaignFinance < ApplicationRecord
       api_key = Rails.application.credentials[:PROPUBLICA_API_KEY]
       propublica_service = PropublicaService.new(api_key)
       Rails.logger.info("API Key: #{api_key}")
+      Rails.logger.info("cycle: #{cycle}, category: #{category}}")  # Log URL before making the request
       api_response = propublica_service.get_candidate_info(cycle, category)
+      Rails.logger.info("api_response: {api_response}")  # Log URL before making the request
       processed_candidates = CampaignFinance.add_candidates_to_db(api_response, cycle, category)
     end
 
@@ -36,9 +38,10 @@ class PropublicaService
   end
 
   def get_candidate_info(cycle, category)
+    Rails.logger.info("get_candidate_info method called") 
     url = "https://api.propublica.org/campaign-finance/v1/#{cycle}/candidates/leaders/#{category}.json"
     
-    Rails.logger.info("API Request URL: #{url}")  # Log URL before making the request
+    Rails.logger.info("API Request URL: #{url}")
     headers = { 'X-API-Key' => @api_key }
   
     response = connection.get(url, nil, headers)
@@ -50,6 +53,7 @@ class PropublicaService
   private
 
   def connection
+    Rails.logger.info("connection method called") 
     @connection ||= Faraday.new do |conn|
       conn.use Faraday::Request::UrlEncoded
       conn.use Faraday::Response::Logger 
@@ -58,6 +62,7 @@ class PropublicaService
   end
 
   def handle_response(response)
+    Rails.logger.info("handle_response method called") 
     if response.status == 200
       Rails.logger.debug("#{response.body}")
       response.body
