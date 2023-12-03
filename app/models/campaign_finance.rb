@@ -38,11 +38,11 @@ class PropublicaService
   def get_candidate_info(cycle, category)
     url = "https://api.propublica.org/campaign-finance/v1/#{cycle}/candidates/leaders/#{category}.json"
     
-    response = connection.get(url) do |req|
-      req.headers['X-API-Key'] = @api_key
-      Rails.logger.info("API Request URL: #{req}")
-      Rails.logger.info("API Request Headers: #{req.headers}")
-    end
+    Rails.logger.info("API Request URL: #{url}")  # Log URL before making the request
+    headers = { 'X-API-Key' => @api_key }
+  
+    response = connection.get(url, nil, headers)
+    Rails.logger.info("API Request Headers: #{headers}")
 
     handle_response(response)
   end
