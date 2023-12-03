@@ -13,7 +13,7 @@ class CampaignFinance < ApplicationRecord
       Rails.logger.info("API Key: #{api_key}")
       Rails.logger.info("cycle: #{cycle}, category: #{category}}")  # Log URL before making the request
       api_response = propublica_service.get_candidate_info(cycle, category)
-      Rails.logger.info("api_response: {api_response}")  # Log URL before making the request
+      Rails.logger.info("api_response: #{api_response}")  # Log URL before making the request
       processed_candidates = CampaignFinance.add_candidates_to_db(api_response, cycle, category)
     end
 
@@ -22,10 +22,10 @@ class CampaignFinance < ApplicationRecord
 
   def self.add_candidates_to_db(api_response, cycle, category)
     candidates_list = []
-    json_info = JSON.parse(api_response)
-    json_info['results'].each do |candidate|
-      candidates_list.push(candidate['name'])
-    end
+    #json_info = JSON.parse(api_response)
+    #json_info['results'].each do |candidate|
+    #  candidates_list.push(candidate['name'])
+    #end
 
     finances = CampaignFinance.create!(candidates_list: candidates_list, cycle: cycle, category: category)
     finances
