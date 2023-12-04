@@ -49,6 +49,10 @@ Then('I should see details of the event') do
   # Add more expectations based on the actual content of the event page
 end
 
+# features/step_definitions/events_controller_steps.rb
+
+# ... (existing steps)
+
 When('I filter events by state') do
   # You may need to set up test data for states and events in specific states
   @state = create(:state, name: 'California', symbol: 'CA')
