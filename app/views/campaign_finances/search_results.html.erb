@@ -1,0 +1,27 @@
+<div class="container">
+  <h1 class="mt-4">Search Results</h1>
+
+  <div class="row">
+    <div class="col-md-6">
+      <p>Cycle: <%= @cycle %></p>
+      <p>Category: <%= @category %></p>
+    </div>
+  </div>
+
+  <table class="table mt-4">
+    <thead>
+      <tr>
+        <th>Candidate</th>
+        <!-- Add other columns as needed -->
+      </tr>
+    </thead>
+    <tbody>
+      <% @finances.first['candidates_list'].each do |candidate| %>
+        <tr>
+          <td><%= candidate %></td>
+          <!-- Add other columns as needed -->
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
