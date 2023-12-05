@@ -1,29 +1,31 @@
+# frozen_string_literal: true
+
 # features/step_definitions/my_news_items_controller_steps.rb
 
 Given('there is a representative in the system') do
   @representative = Representative.create(
-    name: "John Doe",
-    created_at: DateTime.now,
-    updated_at: DateTime.now,
-    ocdid: "ocdid123",
-    title: "Senator",
-    address_street: "123 Main St",
-    address_city: "Cityville",
-    address_state: "CA",
-    address_zip: "12345",
-    party: "Democratic",
-    photo_url: "https://example.com/johndoe.jpg"
+    name:           'John Doe',
+    created_at:     DateTime.now,
+    updated_at:     DateTime.now,
+    ocdid:          'ocdid123',
+    title:          'Senator',
+    address_street: '123 Main St',
+    address_city:   'Cityville',
+    address_state:  'CA',
+    address_zip:    '12345',
+    party:          'Democratic',
+    photo_url:      'https://example.com/johndoe.jpg'
   )
 end
 
 Given('there is an existing news item') do
   @news_item = NewsItem.create(
-    title: "Breaking News",
-    link: "https://example.com/breaking-news",
-    description: "This is a breaking news story.",
+    title:             'Breaking News',
+    link:              'https://example.com/breaking-news',
+    description:       'This is a breaking news story.',
     representative_id: representative.id,
-    created_at: DateTime.now,
-    updated_at: DateTime.now
+    created_at:        DateTime.now,
+    updated_at:        DateTime.now
   )
 end
 

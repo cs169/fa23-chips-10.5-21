@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Given('I am on the representatives page') do
   visit representatives_path
 end

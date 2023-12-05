@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Representative < ApplicationRecord
   has_many :news_items, dependent: :delete_all
 
@@ -32,7 +34,7 @@ class Representative < ApplicationRecord
 
   def self.civic_api_to_representative_params(rep_info)
     reps = []
-    Rails.logger.debug("Value of some_variable: #{rep_info}")
+    Rails.logger.debug { "Value of some_variable: #{rep_info}" }
     rep_info.officials.each_with_index do |official, index|
       office_info = Representative.get_office_info(rep_info, index)
       already_exists = Representative.find_by(name: official.name, title: office_info['title'])
@@ -47,6 +49,6 @@ class Representative < ApplicationRecord
         reps.push(already_exists)
       end
     end
-    return reps
+    reps
   end
 end

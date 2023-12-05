@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # features/step_definitions/login_controller_steps.rb
 
 Given('I am on the login page') do
@@ -12,14 +14,12 @@ When('I click the {string} button') do |button_text|
   click_button(button_text)
 end
 
-
 Then('I should be redirected to the map') do
   expect(page).to have_current_path('/')
 end
 
-
 # Given('I am logged in') do
-#   visit login_path 
+#   visit login_path
 #   click_button "Sign in with GitHub"
 # end
 

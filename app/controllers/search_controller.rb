@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/controllers/search_controller.rb
 
 require 'google/apis/civicinfo_v2'
