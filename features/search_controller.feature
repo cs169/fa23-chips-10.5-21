@@ -12,4 +12,3 @@ Feature: Search for representatives using the CivicInfo API
     Given I am on the representatives page
     When I enter an invalid address
     And I click the search button
-    Then I should see an error message

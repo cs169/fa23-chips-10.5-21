@@ -1,45 +1,37 @@
-require 'httparty'
-require 'net/http'
+require 'faraday'
 require 'json'
 
 class CampaignFinance < ApplicationRecord
-
   serialize :candidates_list, JSON
 
   def self.get_cycle_and_category(cycle, category)
-    # if already stored, return values
     stored_vals = CampaignFinance.where(cycle: cycle, category: category)
-    if stored_vals.count == 0
-      api_key = Rails.application.credentials[:PROPUBLICA_API_KEY]
-      propublica_service = PropublicaService.new(api_key)
-      Rails.logger.info("API Key: #{api_key}")
-      api_response = propublica_service.get_candidate_info(cycle, category)
+
+    unless stored_vals.exists?
+      Rails.logger.info("cycle: #{cycle}, category: #{category}}")  
+
+      api_response = CampaignFinance.get_candidate_info_from_api(cycle, category)
+      if api_response.nil?
+        return nil
+      end
+      Rails.logger.info("api_response: #{api_response}") 
       processed_candidates = CampaignFinance.add_candidates_to_db(api_response, cycle, category)
     end
+
     CampaignFinance.where(cycle: cycle, category: category)
   end
 
-  def self.add_candidates_to_db(api_reponse, cycle, category)
+  def self.add_candidates_to_db(api_response, cycle, category)
     candidates_list = []
-    Rails.logger.debug(api_reponse)
-    json_info = JSON.parse(api_reponse)
-    # Rails.logger.debug(api_reponse.methods)
-    # Rails.logger.debug(json_info.to_s)
-    # Rails.logger.debug(json_info.methods)
+    json_info = JSON.parse(api_response)
     json_info['results'].each do |candidate|
       candidates_list.push(candidate['name'])
     end
+
     finances = CampaignFinance.create!(candidates_list: candidates_list, cycle: cycle, category: category)
     finances
   end
-end
 
-
-class PropublicaService
-
-  def initialize(api_key)
-    @api_key = api_key
-  end
 
   def get_candidate_info(cycle, category)
     url = URI.parse("https://api.propublica.org/campaign-finance/v1/#{cycle}/candidates/leaders/#{category}.json")
@@ -52,16 +44,24 @@ class PropublicaService
     Rails.logger.info("#{url}")
     #response = self.class.get("2015/candidates/leaders/pac-total.json", headers: {'X-API-Key' => "#{@api_key}"})
     handle_response(response)
-  end
-
-  private
-
-  def handle_response(response)
-    if response.code.to_i == 200
-      Rails.logger.debug("#{response.body}")
-      response.body
-    else
-      raise "API request failed with status code #{response.code}: #{response.body}"
+  def self.faraday_connection
+    Rails.logger.info("connection method called")
+    puts "connection method called"
+    @connection ||= Faraday.new do |conn|
+      conn.use Faraday::Request::UrlEncoded
+      conn.use Faraday::Response::Logger 
+      conn.adapter Faraday.default_adapter
     end
   end
+  
 end
+
+class FakeResponse
+  attr_accessor :status, :body
+
+  def initialize(status, body)
+    @status = status
+    @body = body
+  end
+end
+
