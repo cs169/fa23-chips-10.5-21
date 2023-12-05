@@ -1,5 +1,12 @@
 # features/step_definitions/my_news_items_controller_steps.rb
 
+def mock_authenticated_user
+  user = User.create!(email: 'user@example.com', password: 'password')
+  allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+end
+
+
+
 Given('there is a representative in the system') do
   @representative = Representative.create(
     name: "John Doe",
@@ -32,6 +39,7 @@ When('I visit the new news item page') do
 end
 
 When('I fill in the news item form') do
+  puts page.body
   fill_in 'news_item_title', with: 'New News Item'
   fill_in 'news_item_description', with: 'Description for the new news item.'
   fill_in 'news_item_link', with: 'https://example.com'
