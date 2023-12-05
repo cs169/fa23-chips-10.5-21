@@ -32,18 +32,36 @@ class CampaignFinance < ApplicationRecord
     finances
   end
 
+  def self.get_candidate_info_from_api(cycle, category)
+    Rails.logger.info("get_candidate_info method called") 
+    puts "get_candidate_info method called"
+    url = "https://api.propublica.org/campaign-finance/v1/#{cycle}/candidates/leaders/#{category}.json"
+    
+    Rails.logger.info("API Request URL: #{url}")
+    puts "API Request URL: #{url}"
+    api_key = Rails.application.credentials[:PROPUBLICA_API_KEY]
+    headers = { 'X-API-Key' =>  api_key}
+  
+    response = CampaignFinance.faraday_connection.get(url, nil, headers)
+    Rails.logger.info("API Request Headers: #{headers}")
+    puts "API Request Headers: #{headers}"
+    #response = FakeResponse.new(600, "nothing")
 
-  def get_candidate_info(cycle, category)
-    url = URI.parse("https://api.propublica.org/campaign-finance/v1/#{cycle}/candidates/leaders/#{category}.json")
-    http = Net::HTTP.new(url.host, url.port)
-    http.use_ssl = (url.scheme == 'https')
-    request = Net::HTTP::Get.new(url.path)
-    request['X-API-Key'] = "#{@api_key}"
-    response = http.request(request)
-    Rails.logger.info("API Key: #{@api_key}")
-    Rails.logger.info("#{url}")
-    #response = self.class.get("2015/candidates/leaders/pac-total.json", headers: {'X-API-Key' => "#{@api_key}"})
-    handle_response(response)
+    CampaignFinance.handle_response(response)
+  end
+  
+  def self.handle_response(response)
+    Rails.logger.info("handle_response method called") 
+    puts "handle_response method called"
+    if response.status == 200
+      Rails.logger.debug("#{response.body}")
+      return response.body
+    else
+      #raise "API request failed with status code #{response.status}: #{response.body}"
+      return nil
+    end
+  end
+
   def self.faraday_connection
     Rails.logger.info("connection method called")
     puts "connection method called"
@@ -64,4 +82,3 @@ class FakeResponse
     @body = body
   end
 end
-
