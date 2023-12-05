@@ -24,4 +24,3 @@ Feature: Managing news items related to representatives
     And I click the "Delete" button for the news item
     Then I should see a success notice
     And I should not see the deleted news item
-
