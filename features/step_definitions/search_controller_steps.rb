@@ -12,6 +12,10 @@ When('I click the search button') do
   click_button 'Search'
 end
 
+Then('I should be on the representatives page') do
+  expect(current_path).to eq('/search')
+end
+
 Then('I should be on the search page') do
   expect(current_path).to eq('/representatives')
 end
