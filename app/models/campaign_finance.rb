@@ -66,6 +66,7 @@ class CampaignFinance < ApplicationRecord
     @faraday_connection ||= Faraday.new do |conn|
       conn.use Faraday::Request::UrlEncoded
       conn.use Faraday::Response::Logger
+      conn.headers['X-API-Key'] = Rails.application.credentials[:PROPUBLICA_API_KEY]
       conn.adapter Faraday.default_adapter
     end
   end
