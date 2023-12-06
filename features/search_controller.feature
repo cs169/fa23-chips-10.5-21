@@ -4,7 +4,7 @@ Feature: Search for representatives using the CivicInfo API
     Given I am on the representatives page
     When I enter the address "California"
     And I click the search button
-    Then I should be on the representatives page
+    Then I should be on the search page
 
   Scenario: Search with an invalid address
     Given I am on the representatives page

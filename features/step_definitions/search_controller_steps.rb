@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# features/step_definitions/representatives_steps.rb
 
 Given('I am on the representatives page') do
   visit representatives_path
@@ -13,7 +13,7 @@ When('I click the search button') do
 end
 
 Then('I should be on the search page') do
-  expect(current_path).to eq('/representatives')
+  expect(current_path).to eq('/search')
 end
 
 Then('I should see a list of representatives from California') do
@@ -22,16 +22,8 @@ end
 
 Then('I should see name {string}') do |name|
   expect(page).to have_content(name)
-  # Assuming each representative is displayed with a CSS class '.representative'
 end
 
 When('I enter an invalid address') do
-  # You can simulate entering an invalid address here.
-  # For example, you can fill in the address field with a known invalid value.
   fill_in 'address', with: 'invalid_address'
 end
-
-# Then('I should see an error message') do
-#   expect(page).to have_content('Failed to parse address:')
-#   # Modify this expectation based on the actual error message displayed on the page
-# end

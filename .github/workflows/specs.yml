@@ -17,6 +17,7 @@ jobs:
       - shell: bash
         env:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+          PROPUBLICA_API_KEY: ${{ secrets.PROPUBLICA_API_KEY }}
         run: touch master.key && echo "$RAILS_MASTER_KEY" > master.key
 
       - name: Cache multiple paths
