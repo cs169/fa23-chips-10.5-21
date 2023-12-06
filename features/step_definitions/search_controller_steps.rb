@@ -16,10 +16,6 @@ Then('I should be on the representatives page') do
   expect(current_path).to eq('/search')
 end
 
-Then('I should be on the search page') do
-  expect(current_path).to eq('/representatives')
-end
-
 Then('I should see a list of representatives from California') do
   expect(page).to have_selector('.representative', count: 19)
 end
