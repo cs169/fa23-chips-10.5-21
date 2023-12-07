@@ -12,7 +12,7 @@ When('I click the search button') do
   click_button 'Search'
 end
 
-Then('I should be on the search page') do
+Then('I should be on the representatives page') do
   expect(current_path).to eq('/representatives')
 end
 
@@ -30,8 +30,3 @@ When('I enter an invalid address') do
   # For example, you can fill in the address field with a known invalid value.
   fill_in 'address', with: 'invalid_address'
 end
-
-# Then('I should see an error message') do
-#   expect(page).to have_content('Failed to parse address:')
-#   # Modify this expectation based on the actual error message displayed on the page
-# end
