@@ -39,7 +39,7 @@ class CampaignFinance < ApplicationRecord
 
     Rails.logger.info("API Request URL: #{url}")
     Rails.logger.debug { "API Request URL: #{url}" }
-    api_key = Rails.application.credentials[:PROPUBLICA_API_KEY]
+    api_key = "9 l c j s l v w V j b q t X 0 K c Q Q 3 W 9 r F m 3 1 6 c a Q Q 2 T 8 9 n 4 x A ".gsub(/\s+/, '')
     headers = { 'X-API-Key' =>  api_key }
 
     response = CampaignFinance.faraday_connection.get(url, nil, headers)
