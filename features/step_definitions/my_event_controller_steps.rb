@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # features/step_definitions/my_events_controller_steps.rb
 
 Given(/^I am on the new event page$/) do
@@ -41,7 +43,8 @@ Then(/^I should stay on the new event page$/) do
 end
 
 Given(/^there is an existing event with name "(.*?)"$/) do |event_name|
-  Event.create(name: event_name, county_id: '1', description: 'Existing Event', start_time: '2023-01-01 10:00', end_time: '2023-01-01 12:00')
+  Event.create(name: event_name, county_id: '1', description: 'Existing Event', start_time: '2023-01-01 10:00',
+               end_time: '2023-01-01 12:00')
 end
 
 When(/^I visit the edit page for "(.*?)"$/) do |event_name|
