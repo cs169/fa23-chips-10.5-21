@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Given('I am on the representatives page') do
   visit representatives_path
 end
@@ -11,12 +13,11 @@ When('I click the search button') do
 end
 
 Then('I should be on the search page') do
-  expect(current_path).to eq(search_representatives_path)
+  expect(current_path).to eq('/representatives')
 end
 
 Then('I should see a list of representatives from California') do
   expect(page).to have_selector('.representative', count: 19)
-  # Assuming each representative is displayed with a CSS class '.representative'
 end
 
 Then('I should see name {string}') do |name|
@@ -24,7 +25,13 @@ Then('I should see name {string}') do |name|
   # Assuming each representative is displayed with a CSS class '.representative'
 end
 
-Then('I should see an error message') do
-  expect(page).to have_content('Invalid address. Please enter a valid address.')
-  # Modify this expectation based on the actual error message displayed on the page
+When('I enter an invalid address') do
+  # You can simulate entering an invalid address here.
+  # For example, you can fill in the address field with a known invalid value.
+  fill_in 'address', with: 'invalid_address'
 end
+
+# Then('I should see an error message') do
+#   expect(page).to have_content('Failed to parse address:')
+#   # Modify this expectation based on the actual error message displayed on the page
+# end

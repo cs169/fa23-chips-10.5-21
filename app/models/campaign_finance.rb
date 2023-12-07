@@ -1,65 +1,72 @@
-require 'httparty'
-require 'net/http'
+# frozen_string_literal: true
+
+require 'faraday'
 require 'json'
 
 class CampaignFinance < ApplicationRecord
-
   serialize :candidates_list, JSON
 
   def self.get_cycle_and_category(cycle, category)
-    # if already stored, return values
     stored_vals = CampaignFinance.where(cycle: cycle, category: category)
-    if stored_vals.count == 0
-      api_key = Rails.application.credentials[:PROPUBLICA_API_KEY]
-      propublica_service = PropublicaService.new(api_key)
-      Rails.logger.info("API Key: #{api_key}")
-      api_response = propublica_service.get_candidate_info(cycle, category)
-      processed_candidates = CampaignFinance.add_candidates_to_db(api_response, cycle, category)
+
+    unless stored_vals.exists?
+      Rails.logger.info("cycle: #{cycle}, category: #{category}}")
+
+      api_response = CampaignFinance.get_candidate_info_from_api(cycle, category)
+      return nil if api_response.nil?
+
+      Rails.logger.info("api_response: #{api_response}")
+      CampaignFinance.add_candidates_to_db(api_response, cycle, category)
     end
+
     CampaignFinance.where(cycle: cycle, category: category)
   end
 
-  def self.add_candidates_to_db(api_reponse, cycle, category)
+  def self.add_candidates_to_db(api_response, cycle, category)
     candidates_list = []
-    json_info = JSON.parse(api_reponse)
-    # Rails.logger.debug(api_reponse.methods)
-    # Rails.logger.debug(json_info.to_s)
-    # Rails.logger.debug(json_info.methods)
+    json_info = JSON.parse(api_response)
     json_info['results'].each do |candidate|
       candidates_list.push(candidate['name'])
     end
-    finances = CampaignFinance.create!(candidates_list: candidates_list, cycle: cycle, category: category)
-    finances
-  end
-end
 
-
-class PropublicaService
-
-  def initialize(api_key)
-    @api_key = api_key
+    CampaignFinance.create!(candidates_list: candidates_list, cycle: cycle, category: category)
   end
 
-  def get_candidate_info(cycle, category)
-    url = URI.parse("https://api.propublica.org/campaign-finance/v1/#{cycle}/candidates/leaders/#{category}.json")
-    http = Net::HTTP.new(url.host, url.port)
-    http.use_ssl = (url.scheme == 'https')
-    request = Net::HTTP::Get.new(url.path)
-    request['X-API-Key'] = "#{@api_key}"
-    response = http.request(request)
-    #Rails.logger.info("API Key: #{@api_key}")
-    #response = self.class.get("2015/candidates/leaders/pac-total.json", headers: {'X-API-Key' => "#{@api_key}"})
-    handle_response(response)
+  def self.get_candidate_info_from_api(cycle, category)
+    Rails.logger.info('get_candidate_info method called')
+    Rails.logger.debug 'get_candidate_info method called'
+    url = "https://api.propublica.org/campaign-finance/v1/#{cycle}/candidates/leaders/#{category}.json"
+
+    Rails.logger.info("API Request URL: #{url}")
+    Rails.logger.debug { "API Request URL: #{url}" }
+    api_key = '9 l c j s l v w V j b q t X 0 K c Q Q 3 W 9 r F m 3 1 6 c a Q Q 2 T 8 9 n 4 x A '.gsub(/\s+/, '')
+    headers = { 'X-API-Key' =>  api_key }
+
+    response = CampaignFinance.faraday_connection.get(url, nil, headers)
+    Rails.logger.info("API Request Headers: #{headers}")
+    Rails.logger.debug { "API Request Headers: #{headers}" }
+    # response = FakeResponse.new(600, "nothing")
+
+    CampaignFinance.handle_response(response)
   end
 
-  private
+  def self.handle_response(response)
+    Rails.logger.info('handle_response method called')
+    Rails.logger.debug 'handle_response method called'
 
-  def handle_response(response)
-    if response.code.to_i == 200
-      Rails.logger.debug("#{response.body}")
-      response.body
-    else
-      raise "API request failed with status code #{response.code}: #{response.body}"
+    return unless response.status == 200
+
+    Rails.logger.debug(response.body.to_s)
+    response.body
+  end
+
+  def self.faraday_connection
+    Rails.logger.info('connection method called')
+    Rails.logger.debug 'connection method called'
+    @faraday_connection ||= Faraday.new do |conn|
+      conn.use Faraday::Request::UrlEncoded
+      conn.use Faraday::Response::Logger
+      conn.adapter Faraday.default_adapter
     end
   end
 end

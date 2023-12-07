@@ -112,3 +112,5 @@ end
 
 # Used for ProPublica API request
 gem 'httparty'
+gem 'json'
+gem 'net'

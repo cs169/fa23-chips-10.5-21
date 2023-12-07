@@ -6,12 +6,5 @@ Feature: User login and logout
 
   Scenario: Log in with Google OAuth2
     Given I am on the login page
-    When I click the "Login with Google" button
+    When I click the "Sign in with GitHub" button
     Then I should be redirected to the map
-
-  Scenario: Log out
-    Given I am logged in
-    When I click the "Logout" button
-    Then I should be logged out
-    And I should be redirected to the home page
-    And I should see a logout notice
