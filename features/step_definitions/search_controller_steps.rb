@@ -13,7 +13,7 @@ When('I click the search button') do
 end
 
 Then('I should be on the representatives page') do
-  expect(current_path).to eq('/search')
+  expect(current_path).to eq('/representatives')
 end
 
 Then('I should see a list of representatives from California') do
