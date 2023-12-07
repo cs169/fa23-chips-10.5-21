@@ -10,6 +10,6 @@ When(/^I call the std_fips_code method$/) do
   @result = @county.std_fips_code
 end
 
-Then(/^it should return '(\d+)'$/) do |expected_result|
+Then(/^it should return '(\d+)'$/) do |_expected_result|
   expect(@result).to eq('001')
 end
